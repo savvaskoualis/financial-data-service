@@ -8,6 +8,7 @@ namespace FinancialDataService.Infrastructure.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<FinancialInstrument> builder)
         {
+            builder.ToTable("FinancialInstruments");
             builder.HasKey(fi => fi.Id);
             builder.Property(fi => fi.Symbol)
                 .IsRequired()
