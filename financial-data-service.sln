@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Api", "FinancialDataService.Api\FinancialDataService.Api.csproj", "{A5D7906C-DEE5-447A-B036-6687904DC4E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Application", "FinancialDataService.Application\FinancialDataService.Application.csproj", "{770AC3B9-B1B9-4A51-8D17-BB307D228783}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Domain", "FinancialDataService.Domain\FinancialDataService.Domain.csproj", "{B3F29DA8-6B82-49FA-9BBD-8441F9D3970E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Infrastructure", "FinancialDataService.Infrastructure\FinancialDataService.Infrastructure.csproj", "{8FF5CE63-139A-4BE1-9D87-333381558A78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FInancialDataService.Tests", "FInancialDataService.Tests\FInancialDataService.Tests.csproj", "{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "run", "run", "{58F2C53A-78C4-4C55-B115-239D314E5142}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5D7906C-DEE5-447A-B036-6687904DC4E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5D7906C-DEE5-447A-B036-6687904DC4E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5D7906C-DEE5-447A-B036-6687904DC4E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5D7906C-DEE5-447A-B036-6687904DC4E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{770AC3B9-B1B9-4A51-8D17-BB307D228783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{770AC3B9-B1B9-4A51-8D17-BB307D228783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{770AC3B9-B1B9-4A51-8D17-BB307D228783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{770AC3B9-B1B9-4A51-8D17-BB307D228783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3F29DA8-6B82-49FA-9BBD-8441F9D3970E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3F29DA8-6B82-49FA-9BBD-8441F9D3970E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3F29DA8-6B82-49FA-9BBD-8441F9D3970E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3F29DA8-6B82-49FA-9BBD-8441F9D3970E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FF5CE63-139A-4BE1-9D87-333381558A78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FF5CE63-139A-4BE1-9D87-333381558A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FF5CE63-139A-4BE1-9D87-333381558A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FF5CE63-139A-4BE1-9D87-333381558A78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
