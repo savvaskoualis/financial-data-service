@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "run", "run", "{58F2C53A-78C
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Shared", "FinancialDataService.Shared\FinancialDataService.Shared.csproj", "{392D6AFF-12F0-4CB9-92C4-6742625BE95A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,5 +43,9 @@ Global
 		{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{392D6AFF-12F0-4CB9-92C4-6742625BE95A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{392D6AFF-12F0-4CB9-92C4-6742625BE95A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{392D6AFF-12F0-4CB9-92C4-6742625BE95A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{392D6AFF-12F0-4CB9-92C4-6742625BE95A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
