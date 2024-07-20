@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="EFCore.BulkExtensions" Version="8.0.4" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
         <PrivateAssets>all</PrivateAssets>
@@ -18,14 +19,28 @@
       </PackageReference>
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+      <PackageReference Include="Quartz" Version="3.11.0" />
+      <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.11.0" />
+      <PackageReference Include="Quartz.Extensions.Hosting" Version="3.11.0" />
+      <PackageReference Include="System.Net.WebSockets" Version="4.3.0" />
+      <PackageReference Include="System.Net.WebSockets.Client" Version="4.3.2" />
+      <PackageReference Include="Websocket.Client" Version="5.1.2" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\FinancialDataService.Application\FinancialDataService.Application.csproj" />
       <ProjectReference Include="..\FinancialDataService.Domain\FinancialDataService.Domain.csproj" />
+      <ProjectReference Include="..\FinancialDataService.Shared\FinancialDataService.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.ObjectPool">
+        <HintPath>..\..\..\..\..\usr\share\dotnet\shared\Microsoft.AspNetCore.App\8.0.7\Microsoft.Extensions.ObjectPool.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>
