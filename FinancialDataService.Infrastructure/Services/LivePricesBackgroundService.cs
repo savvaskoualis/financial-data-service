@@ -1,5 +1,6 @@
 using FinancialDataService.Application.Interfaces;
 using FinancialDataService.Application.Models;
+using FinancialDataService.Domain.Entities;
 using FinancialDataService.Domain.Interfaces;
 using FinancialDataService.Shared;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,7 @@ namespace FinancialDataService.Infrastructure.Services
         private readonly ILogger<LivePricesBackgroundService> _logger;
         private readonly IStreamingPriceDataProvider _priceDataProvider;
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly IBackplane _backplane;
         private readonly AsyncQueue<PriceUpdateModel> _updateQueue;
         private Task _processingTask;
         private CancellationTokenSource _cts;
@@ -26,33 +28,43 @@ namespace FinancialDataService.Infrastructure.Services
         public LivePricesBackgroundService(
             ILogger<LivePricesBackgroundService> logger,
             IStreamingPriceDataProvider priceDataProvider,
-            IServiceScopeFactory scopeFactory)
+            IServiceScopeFactory scopeFactory,
+            IBackplane backplane)
         {
             _logger = logger;
             _priceDataProvider = priceDataProvider;
             _scopeFactory = scopeFactory;
+            _backplane = backplane;
             _updateQueue = new AsyncQueue<PriceUpdateModel>();
 
             _priceDataProvider.OnPriceUpdate += OnPriceUpdate;
 
             var provider = new DefaultObjectPoolProvider();
             _scopePool = provider.Create(new ServiceScopePooledObjectPolicy(_scopeFactory));
-
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _cts = CancellationTokenSource.CreateLinkedTokenSource(stoppingToken);
+            List<FinancialInstrument> tradingPairs = null;
 
             using (var scope = _scopeFactory.CreateScope())
             {
                 var symbolRepository = scope.ServiceProvider.GetRequiredService<IFinancialInstrumentRepository>();
-                var tradingPairs = await symbolRepository.GetAllAsync();
+                do
+                {
+                    tradingPairs = (await symbolRepository.GetAllAsync()).ToList();
+                    if (tradingPairs.Count == 0)
+                    {
+                        _logger.LogInformation("No trading pairs found, retrying in 10 seconds...");
+                        await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
+                    }
+                }
+                while (tradingPairs.Count == 0 && !stoppingToken.IsCancellationRequested);
+
                 await _priceDataProvider.StartAsync(tradingPairs.Select(t => t.Symbol).ToList());
+                _processingTask = ProcessUpdatesAsync(_cts.Token);
             }
-
-            _processingTask = ProcessUpdatesAsync(_cts.Token);
-
         }
 
         private void OnPriceUpdate(PriceUpdateModel priceUpdate)
@@ -76,9 +88,14 @@ namespace FinancialDataService.Infrastructure.Services
                         symbol.LastTradePrice = priceUpdate.Price;
                         symbol.LastTradeQuantity = priceUpdate.Quantity;
                         symbol.LastTradeTime = priceUpdate.TradeTime;
-                        var context = scope.ServiceProvider.GetRequiredService<FinancialServiceDbContext>();
+                        await using var context = scope.ServiceProvider.GetRequiredService<FinancialServiceDbContext>();
                         await context.SaveChangesAsync(cancellationToken);
+
+                        var message = $"{symbol.Symbol}|{symbol.LastTradePrice}|{symbol.LastTradeQuantity}|{symbol.LastTradeTime:o}";
+                        await _backplane.PublishAsync(message);
                     }
+
+                    priceUpdate = null;
                 }
                 catch (OperationCanceledException)
                 {

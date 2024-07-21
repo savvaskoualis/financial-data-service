@@ -18,16 +18,26 @@ namespace FinancialDataService.Infrastructure.Extensions
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext(configuration);
+            services.AddScoped<IFinancialInstrumentRepository, FinancialInstrumentRepository>();
+            return services;
+        }
+
+        public static IServiceCollection AddJobs(this IServiceCollection services, IConfiguration configuration)
+        {
             services.AddGlobalProviderSettings(configuration);
             services.AddBinanceSettings(configuration);
             services.AddQuartzJobs(configuration);
-
-            services.AddScoped<IFinancialInstrumentRepository, FinancialInstrumentRepository>();
             services.AddScoped<IFinancialInstrumentProvider, BinanceInstrumentsProvider>();
             services.AddSingleton<IStreamingPriceDataProvider, BinanceStreamingPriceDataProvider>();
-
             services.AddHostedService<LivePricesBackgroundService>();
 
+            return services;
+        }
+
+        public static IServiceCollection AddStreams(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<TcpBackplaneSettings>(configuration.GetSection("TcpBackplaneSettings"));
+            services.AddSingleton<IBackplane, TcpIpBackplane>();
             return services;
         }
 
@@ -42,7 +52,7 @@ namespace FinancialDataService.Infrastructure.Extensions
 
         private static void AddQuartzJobs(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<FetchInstrumentsJob>();
+            services.AddSingleton<FetchInstrumentsJob>();
             services.AddQuartz(q =>
             {
                 var jobKey = new JobKey("FetchInstrumentsJob");
