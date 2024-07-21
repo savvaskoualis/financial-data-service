@@ -19,4 +19,4 @@ The solution consists of the following projects:
 
 ### System Components Diagram
 
-![System Components](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/savvaskoualis/financial-data-service/main/SystemComponents.iuml)
+![System Components](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/savvaskoualis/financial-data-service/main/docs/SystemComponents.iuml)
