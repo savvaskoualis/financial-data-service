@@ -1,0 +1,150 @@
+@page "/websocket"
+@using FinancialDataService.UI.Services
+@using Microsoft.AspNetCore.SignalR.Client
+@using Microsoft.Extensions.Options
+@inject NavigationManager Navigation
+@inject HttpClient Http
+@inject IOptions<AppSettings> AppSettings
+@inject WebSocketStateService WebSocketStateService
+
+<h3>WebSocket Subscriptions</h3>
+
+<div class="form-group">
+    <label>Select Symbol:</label>
+    <select class="form-control" @bind="selectedSymbol">
+        @foreach (var instrument in availableInstruments)
+        {
+            <option value="@instrument.Symbol">@instrument.Symbol</option>
+        }
+    </select>
+    <button class="btn btn-primary mt-2" @onclick="AddSubscriber">Add Subscriber</button>
+</div>
+
+<h4>Subscribers</h4>
+<div class="list-group">
+    @foreach (var subscriber in WebSocketStateService.Subscribers)
+    {
+        <div class="list-group-item" style="background-color: @(subscriber.IsHighlighted ? "yellow" : "white"); transition: background-color 1s ease;">
+            <h5>Subscriber @subscriber.Symbol</h5>
+            <p>Latest Price: @subscriber.LatestPrice</p>
+            <p>Quantity: @subscriber.LatestQuantity</p>
+            <p>Last Trade Time: @subscriber.LastTradeTime</p>
+            <button class="btn btn-danger" @onclick="() => RemoveSubscriber(subscriber)">Remove</button>
+        </div>
+    }
+</div>
+
+@code {
+    private List<FinancialInstrumentDto> availableInstruments = new List<FinancialInstrumentDto>();
+    private string selectedSymbol;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await LoadAvailableInstruments();
+        AttachEventHandlers();
+    }
+
+    private async Task LoadAvailableInstruments()
+    {
+        try
+        {
+            availableInstruments = await Http.GetFromJsonAsync<List<FinancialInstrumentDto>>($"{AppSettings.Value.ApiBaseUrl}g/financialinstruments");
+            if (availableInstruments.Any())
+            {
+                selectedSymbol = availableInstruments.First().Symbol;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading instruments: {ex.Message}");
+        }
+    }
+
+    private void AttachEventHandlers()
+    {
+        foreach (var subscriber in WebSocketStateService.Subscribers)
+        {
+            subscriber.Connection.On<string, decimal, decimal, DateTime>("ReceivePriceUpdate", (symbol, price, quantity, tradeTime) =>
+            {
+                if (subscriber.Symbol == symbol)
+                {
+                    subscriber.LatestPrice = price;
+                    subscriber.LatestQuantity = quantity;
+                    subscriber.LastTradeTime = tradeTime;
+                    subscriber.IsHighlighted = true;
+                    Console.WriteLine($"Update for {symbol}: Price={price}, Quantity={quantity}, TradeTime={tradeTime}");
+                    InvokeAsync(StateHasChanged);
+
+                    // Remove the highlight after a delay
+                    Task.Delay(1000).ContinueWith(_ =>
+                    {
+                        subscriber.IsHighlighted = false;
+                        InvokeAsync(StateHasChanged);
+                    });
+                }
+            });
+        }
+    }
+
+    private async Task AddSubscriber()
+    {
+        if (string.IsNullOrEmpty(selectedSymbol))
+        {
+            Console.WriteLine("No symbol selected.");
+            return;
+        }
+
+        if (WebSocketStateService.Subscribers.Any(s => s.Symbol == selectedSymbol))
+        {
+            Console.WriteLine($"Already subscribed to {selectedSymbol}");
+            return;
+        }
+
+        var subscriber = new WebSocketStateService.Subscriber
+        {
+            Symbol = selectedSymbol,
+            Connection = new HubConnectionBuilder()
+                .WithUrl(AppSettings.Value.HubUrl)
+                .Build()
+        };
+
+        subscriber.Connection.On<string, decimal, decimal, DateTime>("ReceivePriceUpdate", (symbol, price, quantity, tradeTime) =>
+        {
+            if (subscriber.Symbol == symbol)
+            {
+                subscriber.LatestPrice = price;
+                subscriber.LatestQuantity = quantity;
+                subscriber.LastTradeTime = tradeTime;
+                subscriber.IsHighlighted = true;
+                Console.WriteLine($"Update for {symbol}: Price={price}, Quantity={quantity}, TradeTime={tradeTime}");
+                InvokeAsync(StateHasChanged);
+
+                // Remove the highlight after a delay
+                Task.Delay(1000).ContinueWith(_ =>
+                {
+                    subscriber.IsHighlighted = false;
+                    InvokeAsync(StateHasChanged);
+                });
+            }
+        });
+
+        await subscriber.Connection.StartAsync();
+        await subscriber.Connection.SendAsync("SubscribeToPriceUpdates", selectedSymbol);
+
+        WebSocketStateService.Subscribers.Add(subscriber);
+        Console.WriteLine($"Subscribed to {selectedSymbol}");
+    }
+
+    private async Task RemoveSubscriber(WebSocketStateService.Subscriber subscriber)
+    {
+        await subscriber.Connection.SendAsync("UnsubscribeFromPriceUpdates", subscriber.Symbol);
+        await subscriber.Connection.StopAsync();
+        WebSocketStateService.Subscribers.Remove(subscriber);
+        Console.WriteLine($"Unsubscribed from {subscriber.Symbol}");
+    }
+
+    private class FinancialInstrumentDto
+    {
+        public string Symbol { get; set; }
+    }
+}

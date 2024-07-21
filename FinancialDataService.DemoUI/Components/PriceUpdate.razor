@@ -1,0 +1,29 @@
+@code {
+    [Parameter] public string Symbol { get; set; }
+    [Parameter] public decimal Price { get; set; }
+    [Parameter] public DateTime TradeTime { get; set; }
+    private string highlightClass;
+
+    protected override void OnParametersSet()
+    {
+        highlightClass = "highlight";
+        Task.Delay(500).ContinueWith(_ =>
+        {
+            highlightClass = string.Empty;
+            InvokeAsync(StateHasChanged);
+        });
+    }
+}
+
+<div class="price-update @highlightClass">
+    <strong>@Symbol:</strong> @Price at @(TradeTime == DateTime.MinValue ? "N/A" : TradeTime.ToString("HH:mm:ss"))
+</div>
+
+<style>
+    .price-update {
+        transition: background-color 0.5s ease;
+    }
+    .highlight {
+        background-color: yellow;
+    }
+</style>

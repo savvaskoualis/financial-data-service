@@ -1,0 +1,87 @@
+﻿@page "/rest"
+@using Microsoft.Extensions.Options
+@inject HttpClient Http
+@inject IOptions<AppSettings> AppSettings
+
+<h3>REST API Calls</h3>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="GetAvailableInstruments">Get Available Instruments</button>
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="Instrument Symbol" @bind="selectedSymbol" />
+    <button class="btn btn-primary mt-2" @onclick="GetInstrumentPrice">Get Instrument Price</button>
+</div>
+
+<h4>Console</h4>
+<pre>@consoleOutput</pre>
+
+@code {
+    private string selectedSymbol;
+    private string consoleOutput;
+
+    private async Task GetAvailableInstruments()
+    {
+        var url = $"{AppSettings.Value.ApiBaseUrl}/financialinstruments";
+        var startTime = DateTime.Now;
+        SetConsoleOutput($"Calling: {url}");
+
+        try
+        {
+            var instruments = await Http.GetFromJsonAsync<List<FinancialInstrumentDto>>(url);
+            var elapsedTime = DateTime.Now - startTime;
+            AppendConsoleOutput($"Elapsed Time: {elapsedTime.TotalMilliseconds} ms");
+            AppendConsoleOutput($"Response: {System.Text.Json.JsonSerializer.Serialize(instruments, new System.Text.Json.JsonSerializerOptions { WriteIndented = true })}");
+        }
+        catch (Exception ex)
+        {
+            AppendConsoleOutput($"Error: {ex.Message}");
+        }
+    }
+
+    private async Task GetInstrumentPrice()
+    {
+        if (string.IsNullOrEmpty(selectedSymbol))
+        {
+            SetConsoleOutput("No symbol selected.");
+            return;
+        }
+
+        var url = $"{AppSettings.Value.ApiBaseUrl}/financialinstruments/{selectedSymbol}";
+        var startTime = DateTime.Now;
+        SetConsoleOutput($"Calling: {url}");
+
+        try
+        {
+            var price = await Http.GetFromJsonAsync<FinancialInstrumentPriceDto>(url);
+            var elapsedTime = DateTime.Now - startTime;
+            AppendConsoleOutput($"Elapsed Time: {elapsedTime.TotalMilliseconds} ms");
+            AppendConsoleOutput($"Response: {System.Text.Json.JsonSerializer.Serialize(price, new System.Text.Json.JsonSerializerOptions { WriteIndented = true })}");
+        }
+        catch (Exception ex)
+        {
+            AppendConsoleOutput($"Error: {ex.Message}");
+        }
+    }
+
+    private void SetConsoleOutput(string message)
+    {
+        consoleOutput = message;
+    }
+
+    private void AppendConsoleOutput(string message)
+    {
+        consoleOutput += $"\n{message}";
+    }
+
+    private class FinancialInstrumentDto
+    {
+        public string Symbol { get; set; }
+    }
+
+    private class FinancialInstrumentPriceDto
+    {
+        public string Symbol { get; set; }
+        public decimal Price { get; set; }
+    }
+}
