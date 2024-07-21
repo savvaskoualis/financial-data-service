@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Api", "FinancialDataService.Api\FinancialDataService.Api.csproj", "{A5D7906C-DEE5-447A-B036-6687904DC4E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Jobs", "FinancialDataService.Jobs\FinancialDataService.Jobs.csproj", "{0A6F9B62-4730-4C1A-8B81-35CAD1C1A78C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Streams", "FinancialDataService.Streams\FinancialDataService.Streams.csproj", "{8CA8C74F-A649-413E-B3AE-6D339B1AEB9C}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Application", "FinancialDataService.Application\FinancialDataService.Application.csproj", "{770AC3B9-B1B9-4A51-8D17-BB307D228783}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Domain", "FinancialDataService.Domain\FinancialDataService.Domain.csproj", "{B3F29DA8-6B82-49FA-9BBD-8441F9D3970E}"
@@ -17,6 +21,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "run", "run", "{58F2C53A-78C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Shared", "FinancialDataService.Shared\FinancialDataService.Shared.csproj", "{392D6AFF-12F0-4CB9-92C4-6742625BE95A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.TcpServer", "FinancialDataService.TcpServer\FinancialDataService.TcpServer.csproj", "{7636DF92-1930-4293-9697-5CDFC4ACA63C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "local", "local", "{5C7DCDB3-C320-4BE6-BD6C-56686F887AAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.DemoUI", "FinancialDataService.DemoUI\FinancialDataService.DemoUI.csproj", "{1B99EF80-29BD-4561-BD54-2B7DCFC79DCE}"
+EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,5 +58,24 @@ Global
 		{392D6AFF-12F0-4CB9-92C4-6742625BE95A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{392D6AFF-12F0-4CB9-92C4-6742625BE95A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{392D6AFF-12F0-4CB9-92C4-6742625BE95A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A6F9B62-4730-4C1A-8B81-35CAD1C1A78C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A6F9B62-4730-4C1A-8B81-35CAD1C1A78C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A6F9B62-4730-4C1A-8B81-35CAD1C1A78C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A6F9B62-4730-4C1A-8B81-35CAD1C1A78C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CA8C74F-A649-413E-B3AE-6D339B1AEB9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CA8C74F-A649-413E-B3AE-6D339B1AEB9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CA8C74F-A649-413E-B3AE-6D339B1AEB9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CA8C74F-A649-413E-B3AE-6D339B1AEB9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7636DF92-1930-4293-9697-5CDFC4ACA63C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7636DF92-1930-4293-9697-5CDFC4ACA63C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7636DF92-1930-4293-9697-5CDFC4ACA63C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7636DF92-1930-4293-9697-5CDFC4ACA63C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B99EF80-29BD-4561-BD54-2B7DCFC79DCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B99EF80-29BD-4561-BD54-2B7DCFC79DCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B99EF80-29BD-4561-BD54-2B7DCFC79DCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B99EF80-29BD-4561-BD54-2B7DCFC79DCE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1B99EF80-29BD-4561-BD54-2B7DCFC79DCE} = {5C7DCDB3-C320-4BE6-BD6C-56686F887AAC}
 	EndGlobalSection
 EndGlobal
