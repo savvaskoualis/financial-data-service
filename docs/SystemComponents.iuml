@@ -1,0 +1,49 @@
+@startuml
+actor User
+
+package "FinancialDataService.Api" {
+  [Get available instruments]
+  [Get latest price of a symbol]
+}
+
+package "FinancialDataService.Jobs" {
+  [Fetch available instruments]
+  [Fetch price updates]
+  [Publish price updates]
+  [Update data]
+}
+
+database DB {
+  [Store data]
+}
+
+package "FinancialDataService.Streams" {
+  [Subscribe to price updates]
+  [Receive price updates]
+}
+
+package "Backplane" {
+  [Distribute price updates]
+}
+
+actor "External Data Provider" as External
+
+User --> [Get available instruments] : Request
+[Get available instruments] --> [Store data] : Query
+
+User --> [Get latest price of a symbol] : Request
+[Get latest price of a symbol] --> [Store data] : Query
+
+User --> [Subscribe to price updates] : Connect
+[Subscribe to price updates] --> [Receive price updates] : Subscribe
+
+[Fetch available instruments] --> External : Fetch
+[Fetch available instruments] --> [Store data] : Update
+
+[Fetch price updates] --> External : Fetch
+[Fetch price updates] --> [Publish price updates] : Publish
+[Publish price updates] --> [Distribute price updates] : Distribute
+[Distribute price updates] --> [Receive price updates] : Send updates
+[Fetch price updates] --> [Update data] : Update
+[Update data] --> [Store data] : Store
+@enduml
