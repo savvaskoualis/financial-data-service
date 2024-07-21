@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FinancialDataService.Api</name>
+    </assembly>
+    <members>
+        <member name="M:FinancialDataService.Api.Controllers.FinancialInstrumentController.GetAvailableInstruments">
+            <summary>
+            Get a list of available instruments
+            </summary>
+            <response code="200">Returns the list of available financial instruments</response>
+        </member>
+        <member name="M:FinancialDataService.Api.Controllers.FinancialInstrumentController.GetInstrumentPrice(System.String)">
+            <summary>
+            Get instrument price by symbol
+            </summary>
+            <param name="symbol">Instrument symbol</param>
+            <response code="200">Returns the price of the financial instrument</response>
+            <response code="404">If the price of the instrument is not found</response>
+        </member>
+    </members>
+</doc>
