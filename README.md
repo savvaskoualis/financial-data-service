@@ -63,17 +63,16 @@ This workflow ensures efficient data management and real-time update delivery, m
     ```sh
     code .
    
-4. Ensure the Docker extension is installed in Visual Studio Code. If not, install it from the Extensions view (Ctrl+Shift+X) by searching for "Docker" and installing the official Docker extension.
+4. Use the Docker extension in Visual Studio Code to build and run the services.
+   You can use the command palette (Cmd+Shift+P on macOS, Ctrl+Shift+P on Windows/Linux) and type Docker: Compose Up to start all services.
 
-5. Open the Command Palette (Ctrl+Shift+P) and select Docker: Add Docker Files to Workspace. Choose .NET: ASP.NET Core when prompted and select the appropriate port.
+5. Build and run the Docker Compose services. Open the Command Palette again and select Docker: Compose Up.
 
-6. Build and run the Docker Compose services. Open the Command Palette again and select Docker: Compose Up.
-
-7. Alternatively, you can run the Docker Compose services using the terminal:
+6Alternatively, you can run the Docker Compose services using the terminal:
     ```sh
     docker-compose up --build -d
    
-8. To stop the services, use the Command Palette and select Docker: Compose Down or run the following command in the terminal:
+7. To stop the services, use the Command Palette and select Docker: Compose Down or run the following command in the terminal:
     ```sh
     docker-compose down
 
