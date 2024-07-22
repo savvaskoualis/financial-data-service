@@ -12,8 +12,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Domain
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinancialDataService.Infrastructure", "FinancialDataService.Infrastructure\FinancialDataService.Infrastructure.csproj", "{8FF5CE63-139A-4BE1-9D87-333381558A78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FInancialDataService.Tests", "FInancialDataService.Tests\FInancialDataService.Tests.csproj", "{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "run", "run", "{58F2C53A-78C4-4C55-B115-239D314E5142}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
@@ -48,10 +46,6 @@ Global
 		{8FF5CE63-139A-4BE1-9D87-333381558A78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FF5CE63-139A-4BE1-9D87-333381558A78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FF5CE63-139A-4BE1-9D87-333381558A78}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E594C1E1-C47B-491B-ADF2-2905F0A4FA10}.Release|Any CPU.Build.0 = Release|Any CPU
 		{392D6AFF-12F0-4CB9-92C4-6742625BE95A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{392D6AFF-12F0-4CB9-92C4-6742625BE95A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{392D6AFF-12F0-4CB9-92C4-6742625BE95A}.Release|Any CPU.ActiveCfg = Release|Any CPU
