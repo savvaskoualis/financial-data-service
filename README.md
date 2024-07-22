@@ -86,11 +86,11 @@ This workflow ensures efficient data management and real-time update delivery, m
 
 6. Alternatively, you can run the Docker Compose services using the terminal:
     ```sh
-    docker-compose up --build -d
+    docker compose up --build -d
    
 7. To stop the services, use the Command Palette and select Docker: Compose Down or run the following command in the terminal:
     ```sh
-    docker-compose down
+    docker compose down
 
 ### Accessing the Application
 
