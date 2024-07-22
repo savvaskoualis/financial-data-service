@@ -109,4 +109,3 @@ The Docker Compose file includes the following services:
 5. **streams**: WebSocket server to distribute price updates to subscribers.
 6. **demoapp**: Blazor application for demonstrating the solution.
 
-This setup will ensure that your application uses Redis as the backplane, providing a robust and scalable solution for handling price updates and subscriptions. 
