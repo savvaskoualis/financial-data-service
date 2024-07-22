@@ -42,7 +42,7 @@ services:
       postgres:
         condition: service_healthy
     volumes:
-      - .:/app
+      - api_app:/app
     networks:
       - financial_network
 
@@ -65,6 +65,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    volumes:
+      - jobs_app:/app
     networks:
       - financial_network
 
@@ -85,7 +87,7 @@ services:
       redis:
         condition: service_healthy
     volumes:
-      - .:/app
+      - streams_app:/app
     networks:
       - financial_network
 
@@ -108,10 +110,16 @@ services:
       streams:
         condition: service_started
     volumes:
-      - .:/app
+      - demoapp_app:/app
     networks:
       - financial_network
 
 networks:
   financial_network:
     driver: bridge
+
+volumes:
+  api_app:
+  jobs_app:
+  streams_app:
+  demoapp_app:
