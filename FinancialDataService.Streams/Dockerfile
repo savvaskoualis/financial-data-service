@@ -1,21 +1,20 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 5001
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["FinancialDataService.Streams/FinancialDataService.Streams.csproj", "FinancialDataService.Streams/"]
+COPY ["FinancialDataService.Application/FinancialDataService.Application.csproj", "FinancialDataService.Application/"]
+COPY ["FinancialDataService.Domain/FinancialDataService.Domain.csproj", "FinancialDataService.Domain/"]
+COPY ["FinancialDataService.Infrastructure/FinancialDataService.Infrastructure.csproj", "FinancialDataService.Infrastructure/"]
 RUN dotnet restore "FinancialDataService.Streams/FinancialDataService.Streams.csproj"
 COPY . .
 WORKDIR "/src/FinancialDataService.Streams"
-RUN dotnet build "FinancialDataService.Streams.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "FinancialDataService.Streams.csproj" -c Release -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "FinancialDataService.Streams.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "FinancialDataService.Streams.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

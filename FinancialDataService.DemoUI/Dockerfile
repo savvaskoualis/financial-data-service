@@ -1,23 +1,21 @@
-﻿# Stage 1: Build the application
+﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 5002
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-
-# Copy project files and restore dependencies
 COPY ["FinancialDataService.DemoUI/FinancialDataService.DemoUI.csproj", "FinancialDataService.DemoUI/"]
+COPY ["FinancialDataService.Application/FinancialDataService.Application.csproj", "FinancialDataService.Application/"]
+COPY ["FinancialDataService.Domain/FinancialDataService.Domain.csproj", "FinancialDataService.Domain/"]
 RUN dotnet restore "FinancialDataService.DemoUI/FinancialDataService.DemoUI.csproj"
-
-# Copy remaining files and build the project
 COPY . .
 WORKDIR "/src/FinancialDataService.DemoUI"
-RUN dotnet build "FinancialDataService.DemoUI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "FinancialDataService.DemoUI.csproj" -c Release -o /app/build
 
+FROM build AS publish
+RUN dotnet publish "FinancialDataService.DemoUI.csproj" -c Release -o /app/publish
 
-# Publish the app
-RUN dotnet publish "FinancialDataService.DemoUI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
-# Stage 2: Serve the application using ASP.NET Core
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM base AS final
 WORKDIR /app
-COPY --from=build /app/publish .
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "FinancialDataService.DemoUI.dll"]

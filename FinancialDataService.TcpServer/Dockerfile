@@ -1,19 +1,16 @@
 ﻿FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
-USER $APP_UID
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["FinancialDataService.TcpServer/FinancialDataService.TcpServer.csproj", "FinancialDataService.TcpServer/"]
 RUN dotnet restore "FinancialDataService.TcpServer/FinancialDataService.TcpServer.csproj"
 COPY . .
 WORKDIR "/src/FinancialDataService.TcpServer"
-RUN dotnet build "FinancialDataService.TcpServer.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "FinancialDataService.TcpServer.csproj" -c Release -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "FinancialDataService.TcpServer.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "FinancialDataService.TcpServer.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
