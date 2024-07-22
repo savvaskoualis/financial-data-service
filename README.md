@@ -9,7 +9,7 @@ This solution provides a service to handle live financial instrument prices sour
 The solution consists of the following projects:
 
 1. **FinancialDataService.Api**: Provides REST API endpoints for getting available instruments and the latest price of a specific instrument.
-2. **FinancialDataService.Jobs**: Fetches available instruments and price updates from an external data provider, updates the data store and publishes updates.
+2. **FinancialDataService.Jobs**: Fetches available instruments and price updates from an external data provider (Binance), updates the data store and publishes updates.
 3. **FinancialDataService.Streams**: Exposes the websocket responsible for delivering price updates to subscribed users. 
 4. **FinancialDataService.TcpServer**: Manages the TCP server for the simple TCP/IP backplane to distribute price updates. Used during development, replaced by redis
 5. **FinancialDataService.DemoUI**: A Blazor application for demonstrating the solution, including API calls and WebSocket subscriptions.
