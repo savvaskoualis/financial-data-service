@@ -76,6 +76,12 @@ This workflow ensures efficient data management and real-time update delivery, m
     ```sh
     docker-compose down
 
+### Accessing the Application
+
+- **API Swagger**: [http://localhost:61001/](http://localhost:61001/)
+- **Demo UI**: [http://localhost:61004](http://localhost:61004)
+
+
 ## Docker Compose Configuration
 
 The Docker Compose file includes the following services:
