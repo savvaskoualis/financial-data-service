@@ -22,7 +22,6 @@ The solution consists of the following projects:
 
 - **Testing**:
     - Develop comprehensive unit and integration tests to ensure the correctness and reliability of the application.
-    - Use automated testing tools to validate functionality during the CI/CD pipeline.
 
 - **Client-Side UI**:
     - In a real-world scenario, the UI would be implemented on the client side (e.g., using Blazor WebAssembly or another SPA framework) to reduce server load and improve performance.
