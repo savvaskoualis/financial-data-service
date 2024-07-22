@@ -48,7 +48,7 @@ The solution consists of the following projects:
     - The `FinancialDataService.Api` component handles user requests for available instruments and the latest prices by querying the database.
 
 - **Publishing Updates**:
-    - In addition to updating the database, `FinancialDataService.Jobs` publishes price updates to the backplane (currently TCP for demonstration purposes).
+    - In addition to updating the database, `FinancialDataService.Jobs` publishes price updates to the backplane (tcp/redis).
 
 - **Distributing Updates**:
     - The `FinancialDataService.Streams` component subscribes to the backplane. Upon receiving updates, it pushes them to SignalR.
