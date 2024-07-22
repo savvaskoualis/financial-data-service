@@ -46,7 +46,7 @@ This workflow ensures efficient data management and real-time update delivery, m
 ### Prerequisites
 
 - .NET 8 SDK
-- Visual Studio Code 
+- Visual Studio Code & docker plugin
 - Docker and Docker Compose
 
 ### Setup
