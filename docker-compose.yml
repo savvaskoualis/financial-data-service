@@ -16,6 +16,18 @@ services:
     networks:
       - financial_network
 
+  redis:
+    image: redis:6.2-alpine
+    ports:
+      - "61005:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - financial_network
+
   api:
     build:
       context: .
@@ -47,13 +59,12 @@ services:
       - GlobalProviderSettings__SupportedSymbols__0=BTCUSDT
       - GlobalProviderSettings__SupportedSymbols__1=ETHUSDT
       - GlobalProviderSettings__SupportedSymbols__2=BNBUSDT
-      - TcpBackplaneSettings__Host=tcpserver
-      - TcpBackplaneSettings__Port=12345
+      - RedisBackplaneSettings__ConnectionString=redis:6379
     depends_on:
       postgres:
         condition: service_healthy
-      tcpserver:
-        condition: service_started
+      redis:
+        condition: service_healthy
     networks:
       - financial_network
 
@@ -67,31 +78,14 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5001
       - ConnectionStrings__Postgres=Host=postgres;Port=5432;Database=FinancialService;Username=postgres;Password=postgres
-      - TcpBackplaneSettings__Host=tcpserver
-      - TcpBackplaneSettings__Port=12345
+      - RedisBackplaneSettings__ConnectionString=redis:6379
     depends_on:
       postgres:
         condition: service_healthy
-      tcpserver:
-        condition: service_started
+      redis:
+        condition: service_healthy
     volumes:
       - .:/app
-    networks:
-      - financial_network
-
-  tcpserver:
-    build:
-      context: .
-      dockerfile: FinancialDataService.TcpServer/Dockerfile
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - TcpServer__Host=0.0.0.0
-      - TcpServer__Port=12345
-    ports:
-      - "61003:12345"
-    depends_on:
-      postgres:
-        condition: service_healthy
     networks:
       - financial_network
 

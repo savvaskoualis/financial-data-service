@@ -2,6 +2,7 @@ using FinancialDataService.Application.Interfaces;
 using FinancialDataService.Infrastructure.Extensions;
 using FinancialDataService.Infrastructure.Services;
 using FinancialDataService.Streams;
+using FinancialDataService.Streams.Handlers;
 using FinancialDataService.Streams.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);

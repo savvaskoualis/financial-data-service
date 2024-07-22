@@ -31,6 +31,7 @@ namespace FinancialDataService.TcpServer
                 {
                     var client = await _listener.AcceptTcpClientAsync();
                     _clients.Add(client);
+                    Console.WriteLine("Client connected...");
                     _ = HandleClientAsync(client);
                 }
                 catch (ObjectDisposedException)
@@ -65,14 +66,16 @@ namespace FinancialDataService.TcpServer
                         {
                             var message = data.Substring(0, delimiterIndex).Trim();
                             data = data.Substring(delimiterIndex + 1);
+                            Console.WriteLine($"Received message: {message}");
                             BroadcastMessage(message);
                         }
 
                         receivedData.Clear();
                         receivedData.Append(data);
                     }
-                    catch (IOException)
+                    catch (IOException ex)
                     {
+                        Console.WriteLine($"IOException: {ex.Message}");
                         break;
                     }
                 }
@@ -83,7 +86,7 @@ namespace FinancialDataService.TcpServer
 
         private void BroadcastMessage(string message)
         {
-            var messageBytes = Encoding.UTF8.GetBytes(message + "\n"); // Add delimiter
+            var messageBytes = Encoding.UTF8.GetBytes(message + "\n");
             foreach (var client in _clients)
             {
                 try
@@ -91,9 +94,9 @@ namespace FinancialDataService.TcpServer
                     var stream = client.GetStream();
                     stream.Write(messageBytes, 0, messageBytes.Length);
                 }
-                catch (IOException)
+                catch (IOException ex)
                 {
-                    // Handle client disconnection
+                    Console.WriteLine($"IOException on broadcast: {ex.Message}");
                     client.Close();
                     _clients.TryTake(out _);
                 }

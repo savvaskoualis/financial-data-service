@@ -1,10 +1,8 @@
 using FinancialDataService.Application.Interfaces;
 using FinancialDataService.Streams.Hubs;
 using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Threading.Tasks;
 
-namespace FinancialDataService.Streams
+namespace FinancialDataService.Streams.Handlers
 {
     public class PriceUpdateHandler
     {
@@ -28,10 +26,6 @@ namespace FinancialDataService.Streams
 
 
             await _hubContext.Clients.All.SendAsync("ReceivePriceUpdate", symbol, price, quantity, tradeTime);
-        }
-
-        public async Task PublishPriceUpdate(string symbol, decimal price, decimal quantity, DateTime tradeTime)
-        {
         }
     }
 }

@@ -38,8 +38,10 @@ namespace FinancialDataService.Infrastructure.Extensions
 
         public static IServiceCollection AddStreams(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<TcpBackplaneSettings>(configuration.GetSection("TcpBackplaneSettings"));
-            services.AddSingleton<IBackplane, TcpIpBackplane>();
+            services.Configure<RedisBackplaneSettings>(configuration.GetSection("RedisBackplaneSettings"));
+
+            // services.Configure<TcpBackplaneSettings>(configuration.GetSection("TcpBackplaneSettings"));
+            services.AddSingleton<IBackplane, RedisBackplane>();
             return services;
         }
 
