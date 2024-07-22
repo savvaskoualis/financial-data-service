@@ -11,9 +11,25 @@ The solution consists of the following projects:
 1. **FinancialDataService.Api**: Provides REST API endpoints for getting available instruments and the latest price of a specific instrument.
 2. **FinancialDataService.Jobs**: Fetches available instruments and price updates from an external data provider, updates the data store and publishes updates.
 3. **FinancialDataService.Streams**: Exposes the websocket responsible for delivering price updates to subscribed users. 
-4. **FinancialDataService.TcpServer**: Manages the TCP server for the simple TCP/IP backplane to distribute price updates. Used during development
+4. **FinancialDataService.TcpServer**: Manages the TCP server for the simple TCP/IP backplane to distribute price updates. Used during development, replaced by redis
 5. **FinancialDataService.DemoUI**: A Blazor application for demonstrating the solution, including API calls and WebSocket subscriptions.
 
+## Improvements
+
+- **Service Resilience**:
+    - Implement retry policies and circuit breakers to handle transient failures and ensure service resilience.
+    - Add health checks and monitoring to detect and recover from failures.
+
+- **Testing**:
+    - Develop comprehensive unit and integration tests to ensure the correctness and reliability of the application.
+    - Use automated testing tools to validate functionality during the CI/CD pipeline.
+
+- **Client-Side UI**:
+    - In a real-world scenario, the UI would be implemented on the client side (e.g., using Blazor WebAssembly or another SPA framework) to reduce server load and improve performance.
+    - This would involve subscribing to SignalR from the client-side application rather than from a Blazor Server app.
+
+- **Scalability**:
+    - To be fully scalable, this solution should be deployed to an orchestration cluster such as Kubernetes, which would provide automated scaling, load balancing, and self-healing capabilities.
 
 ## Architecture
 
