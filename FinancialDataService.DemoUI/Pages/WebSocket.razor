@@ -48,7 +48,7 @@
     {
         try
         {
-            availableInstruments = await Http.GetFromJsonAsync<List<FinancialInstrumentDto>>($"{AppSettings.Value.ApiBaseUrl}g/financialinstruments");
+            availableInstruments = await Http.GetFromJsonAsync<List<FinancialInstrumentDto>>($"{AppSettings.Value.ApiBaseUrl}/financialinstruments");
             if (availableInstruments.Any())
             {
                 selectedSymbol = availableInstruments.First().Symbol;

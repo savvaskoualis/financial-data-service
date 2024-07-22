@@ -1,0 +1,27 @@
+@page "/"
+@using FinancialDataService.UI
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@namespace FinancialDataService.DemoUI.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinancialDataService.DemoUI</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/app.css" rel="stylesheet" />
+</head>
+<body>
+<app>
+    <component type="typeof(App)" render-mode="ServerPrerendered" />
+</app>
+
+<script src="_framework/blazor.server.js"></script>
+</body>
+</html>

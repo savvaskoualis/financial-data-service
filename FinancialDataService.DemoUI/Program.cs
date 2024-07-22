@@ -1,18 +1,17 @@
 using FinancialDataService.DemoUI;
-using FinancialDataService.UI;
 using FinancialDataService.UI.Services;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Options;
-using MudBlazor.Services;
 
+var builder = WebApplication.CreateBuilder(args);
 
-var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.RootComponents.Add<App>("#app");
+// Add services to the container
+builder.Services.AddRazorComponents();
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
 
-// Load appsettings.json
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
+builder.Configuration.AddEnvironmentVariables();
 builder.Services.Configure<AppSettings>(options =>
     builder.Configuration.GetSection("Connections").Bind(options));
 
@@ -21,6 +20,7 @@ builder.Services.AddScoped(sp =>
     var settings = sp.GetRequiredService<IOptions<AppSettings>>().Value;
     return new HttpClient { BaseAddress = new Uri(settings.ApiBaseUrl) };
 });
+
 builder.Services.AddSingleton(sp =>
 {
     var settings = sp.GetRequiredService<IOptions<AppSettings>>().Value;
@@ -29,7 +29,19 @@ builder.Services.AddSingleton(sp =>
 
 builder.Services.AddScoped<WebSocketStateService>();
 
+var app = builder.Build();
 
-builder.Services.AddMudServices();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
 
-await builder.Build().RunAsync();
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+
+app.MapBlazorHub();
+app.MapFallbackToPage("/_Host");
+
+app.Run();
