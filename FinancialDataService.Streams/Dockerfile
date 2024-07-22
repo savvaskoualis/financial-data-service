@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["FinancialDataService.Streams/FinancialDataService.Streams.csproj", "FinancialDataService.Streams/"]
 RUN dotnet restore "FinancialDataService.Streams/FinancialDataService.Streams.csproj"
 COPY . .
-WORKDIR "/src/FinancialDataService.WebSockets"
+WORKDIR "/src/FinancialDataService.Streams"
 RUN dotnet build "FinancialDataService.Streams.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

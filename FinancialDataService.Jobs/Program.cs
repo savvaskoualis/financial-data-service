@@ -1,4 +1,5 @@
 ﻿using FinancialDataService.Application.Interfaces;
+using FinancialDataService.Application.Jobs;
 using FinancialDataService.Infrastructure.Extensions;
 using FinancialDataService.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
@@ -32,5 +33,13 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddJobs(context.Configuration);
     })
     .Build();
+
+// Run instrument fetching job once to populate symbols in DB
+using(var serviceScope = host.Services.CreateScope())
+{
+    var services = serviceScope.ServiceProvider;
+    var job = services.GetRequiredService<FetchInstrumentsJob>();
+    await job.Execute();
+}
 
 await host.RunAsync();

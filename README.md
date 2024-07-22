@@ -2,7 +2,7 @@
 
 ## Overview
 
-This solution provides a service to handle live financial instrument prices sourced from a public data provider. It includes both REST API and WebSocket endpoints, efficiently managing over 1,000 subscribers.
+This solution provides a service to handle live financial instrument prices sourced from a public data provider.
 
 ## Components
 
@@ -43,3 +43,22 @@ The solution consists of the following projects:
     - This approach ensures better load balancing, fault tolerance, and scalability, reliably delivering updates in a highly distributed environment.
 
 This workflow ensures efficient data management and real-time update delivery, making the system scalable and capable of handling a large number of subscribers.
+
+### Prerequisites
+
+- .NET 8 SDK
+- Visual Studio Code
+
+### Setup
+
+1. Clone the repository.
+   ```sh
+   git clone https://github.com/savvaskoualis/financial-data-service.git
+
+2. Navigate to the project directory.
+    ```sh
+    cd financial-data-service
+
+2. Navigate to the project directory.
+    ```sh
+    Start the projects by selecting the "Run All Projects" configuration from the Debug panel in Visual Studio Code and clicking the "Start Debugging" button

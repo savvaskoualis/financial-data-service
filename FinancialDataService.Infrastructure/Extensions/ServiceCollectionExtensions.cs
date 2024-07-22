@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Quartz;
+using System.Configuration;
+using ProviderSettings = FinancialDataService.Infrastructure.Options.ProviderSettings;
 
 namespace FinancialDataService.Infrastructure.Extensions
 {
