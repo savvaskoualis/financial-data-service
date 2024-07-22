@@ -68,7 +68,7 @@ This workflow ensures efficient data management and real-time update delivery, m
 
 5. Build and run the Docker Compose services. Open the Command Palette again and select Docker: Compose Up.
 
-6Alternatively, you can run the Docker Compose services using the terminal:
+6. Alternatively, you can run the Docker Compose services using the terminal:
     ```sh
     docker-compose up --build -d
    
